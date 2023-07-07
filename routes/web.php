@@ -24,7 +24,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/', [LoginController::class, 'index'])->name('login');
+    Route::get('/', [LoginController::class, 'index'])->name('home');
+    Route::get('/login', [LoginController::class, 'index'])->name('login.index');
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('login', [LoginController::class, 'login'])->name('login.post');
 });
