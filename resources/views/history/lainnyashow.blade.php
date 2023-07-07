@@ -129,7 +129,7 @@
                     </div>
                 </div>
                 <div class="mt-4">
-                    <a href="{{ route('lainnya.index') }}" class="btn btn-primary">Kembali</a>
+                    <a href="{{ route('otherpayment.index') }}" class="btn btn-primary">Kembali</a>
                 </div>
             </div>
         </div>
