@@ -10,9 +10,9 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Sihonor</title>
-    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <title>{{ $settings->nama_aplikasi . ' - ' . $settings->nama_sekolah }}</title>
+    <link rel="apple-touch-icon" href="{{ asset('storage/' . $settings->logo_sekolah) }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('storage/' . $settings->logo_sekolah) }}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Theme CSS -->
@@ -53,8 +53,7 @@
                         <div class="card bg-authentication rounded-0 mb-0">
                             <div class="row m-0">
                                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
-                                    <img src="{{ asset('theme/app-assets/images/pages/login.png') }}"
-                                        alt="branding logo">
+                                    <img src="{{ asset('storage/' . $settings->img_login) }}" alt="Login Image">
                                 </div>
                                 <div class="col-lg-6 col-12 p-0">
                                     <div class="card rounded-0 mb-0 px-2">
@@ -63,7 +62,7 @@
                                                 <h4 class="mb-0">Login</h4>
                                             </div>
                                         </div>
-                                        <p class="px-2">Welcome back, please login to your account.</p>
+                                        <p class="px-2">{{ $settings->nama_aplikasi . ' - ' . $settings->nama_sekolah}} </p>
                                         <div class="card-content">
                                             <div class="card-body pt-1">
                                                 <form action="{{ route('login.post') }}" method="POST">

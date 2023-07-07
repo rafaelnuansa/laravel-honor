@@ -161,6 +161,13 @@
                     <span class="menu-title">Users</span>
                 </a>
             </li>
+
+            <li class="nav-item {{ Str::startsWith(request()->route()->getName(),'settings.')? 'active': '' }}">
+                <a href="{{ route('settings.index') }}">
+                    <i class="feather icon-settings"></i>
+                    <span class="menu-title">Settings</span>
+                </a>
+            </li>
             @endif
 
         </ul>

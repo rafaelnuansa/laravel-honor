@@ -17,6 +17,7 @@ use App\Http\Controllers\OtherPaymentController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\SemesterController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatusMengajarController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\UserController;
@@ -70,6 +71,8 @@ Route::middleware(['auth:users'])->group(function () {
     // Admin Only
     Route::middleware(['checkAdministrator'])->group(function () {
         Route::resource('users', UserController::class)->names('users');
+        Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+        Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
         // Progress Dev
         Route::resource('semesters', SemesterController::class);
         Route::post('semesters/{semester}/set-active', [SemesterController::class, 'setActiveSemester'])->name('semesters.setActive');

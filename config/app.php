@@ -171,6 +171,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        App\Providers\ServiceSettingsProvider::class,
     ])->toArray(),
 
     /*
