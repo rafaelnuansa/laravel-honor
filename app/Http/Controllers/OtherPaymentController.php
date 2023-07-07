@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\OtherPayment;
 use App\Models\OtherPaymentItem;
 use App\Models\Pegawai;
+use App\Notifications\OtherPaymentCreatedNotification;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
@@ -69,6 +70,13 @@ class OtherPaymentController extends Controller
 
             $otherPayment->total_payment = $totalPayment; // Set nilai total_payment
             $otherPayment->save();
+
+            $pegawaiId = $request->pegawai_id;
+
+            $pegawai = Pegawai::find($pegawaiId);
+            if ($pegawai) {
+                $pegawai->notify(new OtherPaymentCreatedNotification($otherPayment));
+            }
 
             DB::commit(); // Commit transaksi
 
