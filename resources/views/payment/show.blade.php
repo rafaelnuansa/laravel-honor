@@ -40,7 +40,7 @@
                             <div class="col-md-6">
                                 <h5>{{ $settings->nama_sekolah }}</h5>
                                 <address class="line-h-24">
-                                    {{ $settings->nomor_kontak }}<br>
+                                    {{ $settings->alamat_sekolah }}<br>
                                     <abbr title="Whastapp">{{ $settings->nomor_kontak }}</abbr>
                                 </address>
 
