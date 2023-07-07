@@ -1,4 +1,4 @@
-@extends('components.layout')
+@extends('components.layout-pegawai')
 
 @section('content')
     <div class="container-fluid">
