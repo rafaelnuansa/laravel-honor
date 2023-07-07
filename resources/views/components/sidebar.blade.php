@@ -3,9 +3,9 @@
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{ route('dashboard.index') }}">
                     <i class="feather icon-award"></i>
-                    <h2 class="brand-text mb-0">Sihonor</h2>
+                    <h2 class="brand-text mb-0">{{ $settings->nama_aplikasi}}</h2>
                 </a>
             </li>
 
