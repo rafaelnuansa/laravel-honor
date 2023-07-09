@@ -21,6 +21,7 @@ class DashboardController extends Controller
             $totalJtmYear = Honor::where('tanggal', '>=', Carbon::now()->startOfYear())->where('tanggal', '<=', Carbon::now()->endOfYear())->sum('jtm');
             $totalHonorMonth = Honor::whereMonth('tanggal', Carbon::now()->month)->sum('jumlah');
             $riwayatHonorBulanIni = Honor::whereMonth('tanggal', Carbon::now()->month)->orderBy('tanggal', 'desc')->take(10)->get();
+
             return view('dashboard.index', [
                 'totalJtmDaily' => $totalJtmDaily,
                 'totalJtmWeek' => $totalJtmWeek,

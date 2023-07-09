@@ -18,7 +18,7 @@ class CheckBendaharaOrAdmin
         $user = $request->user();
 
         if (!$user || ($user->level !== 'Bendahara' && $user->level !== 'Administrator' || !auth()->guard('users')->check())) {
-            return redirect()->route('login.index')->with('warning', 'Please login with your account');
+            return redirect()->route('login')->with('warning', 'Please login with your account');
         }
 
         return $next($request);

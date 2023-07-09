@@ -49,7 +49,7 @@ Route::middleware(['auth:pegawai,users'])->group(function () {
 Route::get('logout', [DashboardController::class, 'logout'])->name('dashboard.logout');
 
 Route::middleware(['auth:users'])->group(function () {
-    Route::middleware(['checkBendaharaOrAdmin'])->group(function () {
+    Route::middleware(['checkOperatorOrAdmin'])->group(function () {
         Route::get('pegawai/export', [PegawaiController::class, 'export'])->name('pegawai.export');
         Route::post('/pegawai/{pegawai}/assign-mapel', [PegawaiController::class, 'assignMapel'])->name('pegawai.assign-mapel');
         Route::post('/pegawai/{pegawai}/assign-tugas', [PegawaiController::class, 'assignTugas'])->name('pegawai.assign-tugas');
@@ -67,6 +67,7 @@ Route::middleware(['auth:users'])->group(function () {
         Route::resource('channel', ChannelController::class)->names('channels');
         Route::resource('kegiatan', KegiatanController::class)->parameters(['kegiatan' => 'kegiatan'])->names('kegiatan');
         Route::resource('tugas', TugasController::class)->parameters(['tugas' => 'tugas'])->names('tugas');
+        Route::resource('honor', HonorController::class)->names('honor');
     });
 
     // Admin Only
@@ -88,7 +89,7 @@ Route::middleware(['auth:users'])->group(function () {
         Route::get('payment-other/{otherPayment}/edit', [OtherPaymentController::class, 'edit'])->name('otherpayment.edit');
         Route::put('payment-other/{otherPayment}', [OtherPaymentController::class, 'update'])->name('otherpayment.update');
         Route::delete('payment-other/{otherPayment}', [OtherPaymentController::class, 'destroy'])->name('otherpayment.destroy');
-        Route::resource('honor', HonorController::class)->names('honor');
+
         Route::get('payment/getTotalHonor', [PaymentController::class, 'getTotalHonor'])->name('payment.getTotalHonor');
         Route::get('payment/getTugasHonor', [PaymentController::class, 'getTugasHonor'])->name('payment.getTugasHonor');
         Route::resource('payment', PaymentController::class)->names('payment');
