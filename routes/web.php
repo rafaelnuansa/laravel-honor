@@ -22,7 +22,6 @@ use App\Http\Controllers\StatusMengajarController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-Route::post('/get-mapel-by-pegawai', [HonorController::class, 'getMapelByPegawai'])->name('getMapelByPegawai');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', [LoginController::class, 'index'])->name('home');
@@ -36,7 +35,6 @@ Route::middleware(['auth:pegawai,users'])->group(function () {
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
     Route::post('notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
-
 });
 
 Route::middleware(['auth:pegawai,users'])->group(function () {
@@ -69,6 +67,8 @@ Route::middleware(['auth:users'])->group(function () {
         Route::resource('kegiatan', KegiatanController::class)->parameters(['kegiatan' => 'kegiatan'])->names('kegiatan');
         Route::resource('tugas', TugasController::class)->parameters(['tugas' => 'tugas'])->names('tugas');
         Route::resource('honor', HonorController::class)->names('honor');
+
+        Route::post('/get-mapel-by-pegawai', [HonorController::class, 'getMapelByPegawai'])->name('getMapelByPegawai');
     });
 
     // Admin Only
@@ -100,6 +100,3 @@ Route::middleware(['auth:users'])->group(function () {
     Route::get('/laporan/payment', [LaporanPembayaranController::class, 'index'])->name('laporan.payment.index');
     Route::get('/laporan/other', [LaporanPembayaranController::class, 'other'])->name('laporan.payment.other');
 });
-
-
-
