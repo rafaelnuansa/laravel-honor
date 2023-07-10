@@ -33,7 +33,7 @@ class DashboardController extends Controller
         } elseif (Auth::guard('pegawai')->check()) {
             //Pegawai
 
-            $pegawai_id = auth()->guard('pegawai')->id();
+            $pegawai_id = auth()->guard('pegawai')->user()->id;
             $totalJtmDaily = Honor::where('pegawai_id', $pegawai_id)
                 ->where('tanggal', Carbon::today())
                 ->sum('jtm');
