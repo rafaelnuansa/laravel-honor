@@ -8,6 +8,7 @@ use App\Models\Pegawai;
 use App\Models\Jabatan;
 use App\Models\Kelas;
 use App\Models\Mapel;
+use App\Models\PegawaiMapel;
 use App\Models\SettingHonor;
 use App\Models\StatusMengajar;
 
@@ -55,7 +56,6 @@ class HonorController extends Controller
                         // Set nilai honor berdasarkan setting honor dan dikalikan jtm
                         $honor->honor = $jabatanHonor->honor_jabatan;
                         $honor->jumlah = $jabatanHonor->honor_jabatan * $request->jtm;
-
                     } else {
                         throw new \Exception('Honor belum diatur untuk jabatan ini.');
                     }
@@ -109,7 +109,6 @@ class HonorController extends Controller
                         // Set nilai honor berdasarkan setting honor dan dikalikan jtm
                         $honor->honor = $jabatanHonor->honor_jabatan;
                         $honor->jumlah = $jabatanHonor->honor_jabatan * $request->jtm;
-
                     } else {
                         throw new \Exception('Honor belum diatur untuk jabatan ini.');
                     }
@@ -131,5 +130,23 @@ class HonorController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+    public function getMapelByPegawai(Request $request)
+    {
+        $pegawaiId = $request->input('pegawai_id');
 
+        // Query untuk mendapatkan daftar mata pelajaran berdasarkan pegawai yang dipilih
+        $mapelList = PegawaiMapel::with('mapel')->where('pegawai_id', $pegawaiId)->get();
+        // dd($mapelList);
+        return response()->json(['mapelList' => $mapelList]);
+    }
+
+
+    public function getMapelByKelas(Request $request)
+    {
+        $kelasId = $request->input('kelas_id');
+        // Query untuk mendapatkan daftar mata pelajaran berdasarkan kelas yang dipilih
+        $mapelList = Mapel::where('kelas_id', $kelasId)->get();
+
+        return response()->json(['mapelList' => $mapelList]);
+    }
 }

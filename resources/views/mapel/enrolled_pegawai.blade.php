@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
             <a href="{{ route('mapel.index')}}" class="btn btn-outline-dark"> Kembali</a>
-            <form action="{{ route('mapel.enrollAll', $mapelList[0]->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin enroll semua pegawai?')">
+            <form action="{{ route('mapel.enrollAll', $mapel->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin enroll semua pegawai?')">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary waves-effect waves-light">
                     Enroll Semua Pegawai

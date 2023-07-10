@@ -43,27 +43,33 @@ class MapelController extends Controller
 
         return redirect()->back()->with('success', 'Pegawai berhasil di-enroll ke mata pelajaran.');
     }
-
-    public function enrollAll(Mapel $mapel)
+    public function enrollAll($mapelId)
     {
         try {
-            $pegawaiIds = Pegawai::pluck('id')->toArray();
+            $mapel = Mapel::findOrFail($mapelId);
 
-            // Periksa apakah semua pegawai sudah di-enroll pada mapel tersebut
+            // Get all pegawai
+            $pegawaiList = Pegawai::all();
+
+            // Get the enrolled pegawai IDs for the selected mapel
             $enrolledPegawaiIds = $mapel->pegawaiMapel()->pluck('pegawai_id')->toArray();
-            $unenrolledPegawaiIds = array_diff($pegawaiIds, $enrolledPegawaiIds);
 
-            if (empty($unenrolledPegawaiIds)) {
+            // Filter unenrolled pegawai
+            $unenrolledPegawaiList = $pegawaiList->reject(function ($pegawai) use ($enrolledPegawaiIds) {
+                return in_array($pegawai->id, $enrolledPegawaiIds);
+            });
+
+            if ($unenrolledPegawaiList->isEmpty()) {
                 return redirect()->back()->with('error', 'Semua pegawai sudah di-enroll ke mata pelajaran ini.');
             }
 
-            // Enroll semua pegawai yang belum di-enroll ke mata pelajaran
+            // Enroll all unenrolled pegawai in the selected mapel
             $pegawaiMapels = [];
 
-            foreach ($unenrolledPegawaiIds as $pegawaiId) {
+            foreach ($unenrolledPegawaiList as $pegawai) {
                 $pegawaiMapels[] = [
                     'mapel_id' => $mapel->id,
-                    'pegawai_id' => $pegawaiId,
+                    'pegawai_id' => $pegawai->id,
                 ];
             }
 
@@ -76,13 +82,16 @@ class MapelController extends Controller
     }
 
 
+
+
     public function viewEnrolledPegawai(Mapel $mapel)
     {
-        $pegawaiList = $mapel->pegawaiMapel()->with('pegawai')->get();
+        $pegawaiList = $mapel->pegawaiMapel()->get();
 
         $mapelList = Mapel::latest()->get();
         return view('mapel.enrolled_pegawai', compact('mapel', 'pegawaiList', 'mapelList'));
     }
+
     public function unenroll(Mapel $mapel, PegawaiMapel $pegawaiMapel)
     {
         try {

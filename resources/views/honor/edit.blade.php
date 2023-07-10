@@ -93,4 +93,52 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            $(document).ready(function() {
+                // Get the selected pegawai_id from the form data
+                var selectedPegawaiId = "{{ $honor->pegawai_id }}";
+
+                // Load the mapel options based on the selected pegawai_id
+                loadMapelOptions(selectedPegawaiId);
+
+                // Handle the change event of the pegawai_id select element
+                $('#pegawai_id').change(function() {
+                    var selectedPegawaiId = $(this).val();
+                    loadMapelOptions(selectedPegawaiId);
+                });
+
+                // Function to load the mapel options based on the selected pegawai_id
+                function loadMapelOptions(selectedPegawaiId) {
+                    var url = "{{ route('getMapelByPegawai') }}";
+
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: {
+                            pegawai_id: selectedPegawaiId,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            // Clear the existing options
+                            $('#mapel_id').empty();
+
+                            // Add the new options
+                            $.each(response.mapelList, function(key, value) {
+                                var option = $('<option>').val(value.mapel.id).text(value.mapel.nama_mapel);
+                                $('#mapel_id').append(option);
+                            });
+
+                            // Set the selected mapel_id
+                            $('#mapel_id').val("{{ $honor->mapel_id }}");
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                }
+            });
+        </script>
+    @endpush
 @endsection

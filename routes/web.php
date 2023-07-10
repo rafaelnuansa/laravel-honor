@@ -22,6 +22,7 @@ use App\Http\Controllers\StatusMengajarController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+Route::post('/get-mapel-by-pegawai', [HonorController::class, 'getMapelByPegawai'])->name('getMapelByPegawai');
 
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', [LoginController::class, 'index'])->name('home');
